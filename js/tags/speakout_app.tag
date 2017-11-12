@@ -2,6 +2,9 @@
   <textarea value={ text } onkeyup={ onPhraseKeyUp } ref="phrase"></textarea>
   <speakout-progress ref="progress" progress={ progress } play={ onSpeak } stop={ onStop } speaking={ speaking }>
   </speakout-progress>
+  <div>
+    <button value="Clear" onclick={ onClear }>Clear</button>
+  </div>
   <button class="button--options" aria-expanded={ openOptions } onclick={ onToggleOptions } >
     <cog-icon></cog-icon>
   </button>
@@ -38,6 +41,7 @@
     </div>
     <button value="Reset" onclick={ onResetOptions }>Reset</button>
   </fieldset>
+  <share-link text={ text } ref="shareLink"></share-link>
 
   <script>
     this.speaking = false;
@@ -64,11 +68,18 @@
         var self = this;  
         this.speechAvailable = true;
         this.speechUtterance = new SpeechSynthesisUtterance(this.text);
-        window.speechSynthesis.onvoiceschanged = function() {
+
+        if ('onvoiceschanged' in window.speechSynthesis) {
+          window.speechSynthesis.onvoiceschanged = function() {
+            self.voices = window.speechSynthesis.getVoices();
+            console.log(self.voices);
+            self.update();
+          };
+        } else {
           self.voices = window.speechSynthesis.getVoices();
           console.log(self.voices);
           self.update();
-        };
+        }
 
         this.speechUtterance.onstart = () => {
           this.buttonState = "Stop";
@@ -96,8 +107,28 @@
           this.refs.progress.update();
           //onCurrentWord(words[0]);
         };
+
+        // read querystring
+        console.log(window.location.search);
+        if (window.location.search) {
+          var params = this.parseQueryString(window.location.search.substring(1))
+          console.log("params found: ", params);
+          this.text = decodeURI(params.phrase);
+        }
       }
     });
+
+    parseQueryString( queryString ) {
+      var params = {}, queries, temp, i, l;
+      // Split into key/value pairs
+      queries = queryString.split("&");
+      // Convert the array of strings into an object
+      for ( i = 0, l = queries.length; i < l; i++ ) {
+          temp = queries[i].split('=');
+          params[temp[0]] = temp[1];
+      }
+      return params;
+    };
 
     onToggleOptions(e) {
       this.openOptions = !this.openOptions;
@@ -133,15 +164,23 @@
     }
 
     onPhraseKeyUp(e) {
+      this.text = this.refs.phrase.value;
       if (e.which == 13) {
         e.preventDefault(); 
-        this.speak(this.refs.phrase.value);
+        this.speak(this.text);
       }
+
+      this.update();
     }
 
     onVoiceSelect(e) {
       console.log("voice changed")
       this.selectedVoice = this.voices[this.refs.voice.selectedIndex]
+    }
+
+    onClear(e) {
+      this.text = "";
+      this.update();
     }
 
     onStop(e) {
@@ -160,14 +199,16 @@
         window.speechSynthesis.pause();
       }
 
-      window.speechSynthesis.cancel();
-      this.speechUtterance.text = phrase;
-      this.speechUtterance.voice = this.selectedVoice || this.speechUtterance.voice;
-      this.speechUtterance.pitch = this.pitch;
-      this.speechUtterance.rate = this.rate;
-      this.speechUtterance.volume = this.volume;
-      window.speechSynthesis.speak(this.speechUtterance);
-    
+      if (phrase.length > 0) {
+        window.speechSynthesis.cancel();
+        this.speechUtterance.text = phrase;
+        this.speechUtterance.voice = this.selectedVoice || this.speechUtterance.voice;
+        this.speechUtterance.pitch = this.pitch;
+        this.speechUtterance.rate = this.rate;
+        this.speechUtterance.volume = this.volume;
+        console.log(this.speechUtterance);
+        window.speechSynthesis.speak(this.speechUtterance);
+      }
     }
 
     onSpeak(e) {

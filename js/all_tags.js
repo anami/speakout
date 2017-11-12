@@ -2,7 +2,25 @@ riot.tag2('cog-icon', '<svg id="cog" viewbox="0 0 190 190"><g transform="transla
 });
 riot.tag2('play-button', '<button aria-pressed="{opts.state ? \'true\' : \'false\'}" aria-label="play"> <svg viewbox="0 0 100 100"> <g transform="translate(0 -952.36)"> <g class="pause-icon" transform="translate(1.0714 .71367)"> <rect style="fill:#ffffff" ry="2.7614" height="45" width="15" y="979.15" x="53.929"></rect> <rect style="fill:#ffffff" ry="2.7614" height="45" width="15" y="979.15" x="28.929"></rect> </g> <path class="play-icon" style="stroke-linejoin:round;fill-rule:evenodd;stroke:#ffffff;stroke-width:5;fill:#ffffff" d="m38.5 982.36v40l35-20z"></path> </g> </svg> </button>', '', '', function(opts) {
 });
-riot.tag2('speakout-app', '<textarea riot-value="{text}" onkeyup="{onPhraseKeyUp}" ref="phrase"></textarea> <speakout-progress ref="progress" progress="{progress}" play="{onSpeak}" stop="{onStop}" speaking="{speaking}"> </speakout-progress> <button class="button--options" aria-expanded="{openOptions}" onclick="{onToggleOptions}"> <cog-icon></cog-icon> </button> <fieldset class="speakout-options {openOptionsCss} "> <legend>Options</legend> <div class="speakout-options__section"> <label for="voice">Speaker</label> <div> <select onchange="{onVoiceSelect}" ref="voice" name="voice"> <option each="{voice in voices}" riot-value="{voice.name}">{voice.name + ⁗ - (⁗ + voice.lang + ⁗)⁗}</option> </select> </div> </div> <div class="speakout-options__section"> <label>Pitch</label> <div> <input name="pitch" ref="pitch" type="range" min="0" max="20" oninput="{onPitchChange}" riot-value="{pitchVal}"> <label>{pitch}</label> </div> </div> <div class="speakout-options__section"> <label>Rate</label> <div> <input name="rate" ref="rate" type="range" min="10" max="100" oninput="{onRateChange}" riot-value="{rangeVal}"> <label>{rate}</label> </div> </div> <div class="speakout-options__section"> <label>Volume</label> <div> <input name="volume" ref="volume" type="range" min="0" max="10" oninput="{onVolumeChange}" riot-value="{volVal}"> <label>{volume}</label> </div> </div> <button value="Reset" onclick="{onResetOptions}">Reset</button> </fieldset>', '', '', function(opts) {
+riot.tag2('share-link', '<div class="link-section"> <div> <label for="link">Link to your speech:</label> <input id="link" type="text" riot-value="{encodedLink}"> </div> </div>', '', '', function(opts) {
+    this.text = opts.text;
+    this.encodedLink = window.location.href;
+
+    this.on('update', function() {
+      console.log(opts.text);
+      var baseURI = window.location.href;
+
+      if (window.location.search) {
+        baseURI = baseURI.substring(0, baseURI.indexOf("?"));
+        console.log("baseURI: ", baseURI);
+      } else{
+        baseURI = window.location.href;
+      }
+
+      this.encodedLink = baseURI + "?phrase=" + encodeURI(opts.text.toLowerCase());
+    })
+});
+riot.tag2('speakout-app', '<textarea riot-value="{text}" onkeyup="{onPhraseKeyUp}" ref="phrase"></textarea> <speakout-progress ref="progress" progress="{progress}" play="{onSpeak}" stop="{onStop}" speaking="{speaking}"> </speakout-progress> <div> <button value="Clear" onclick="{onClear}">Clear</button> </div> <button class="button--options" aria-expanded="{openOptions}" onclick="{onToggleOptions}"> <cog-icon></cog-icon> </button> <fieldset class="speakout-options {openOptionsCss} "> <legend>Options</legend> <div class="speakout-options__section"> <label for="voice">Speaker</label> <div> <select onchange="{onVoiceSelect}" ref="voice" name="voice"> <option each="{voice in voices}" riot-value="{voice.name}">{voice.name + ⁗ - (⁗ + voice.lang + ⁗)⁗}</option> </select> </div> </div> <div class="speakout-options__section"> <label>Pitch</label> <div> <input name="pitch" ref="pitch" type="range" min="0" max="20" oninput="{onPitchChange}" riot-value="{pitchVal}"> <label>{pitch}</label> </div> </div> <div class="speakout-options__section"> <label>Rate</label> <div> <input name="rate" ref="rate" type="range" min="10" max="100" oninput="{onRateChange}" riot-value="{rangeVal}"> <label>{rate}</label> </div> </div> <div class="speakout-options__section"> <label>Volume</label> <div> <input name="volume" ref="volume" type="range" min="0" max="10" oninput="{onVolumeChange}" riot-value="{volVal}"> <label>{volume}</label> </div> </div> <button value="Reset" onclick="{onResetOptions}">Reset</button> </fieldset> <share-link text="{text}" ref="shareLink"></share-link>', '', '', function(opts) {
     this.speaking = false;
     this.speechAvailable = false;
     this.text = "Welcome to SpeakOut! Type anything here and press ENTER. Have fun!";
@@ -26,11 +44,18 @@ riot.tag2('speakout-app', '<textarea riot-value="{text}" onkeyup="{onPhraseKeyUp
         var self = this;
         this.speechAvailable = true;
         this.speechUtterance = new SpeechSynthesisUtterance(this.text);
-        window.speechSynthesis.onvoiceschanged = function() {
+
+        if ('onvoiceschanged' in window.speechSynthesis) {
+          window.speechSynthesis.onvoiceschanged = function() {
+            self.voices = window.speechSynthesis.getVoices();
+            console.log(self.voices);
+            self.update();
+          };
+        } else {
           self.voices = window.speechSynthesis.getVoices();
           console.log(self.voices);
           self.update();
-        };
+        }
 
         this.speechUtterance.onstart = () => {
           this.buttonState = "Stop";
@@ -58,8 +83,27 @@ riot.tag2('speakout-app', '<textarea riot-value="{text}" onkeyup="{onPhraseKeyUp
           this.refs.progress.update();
 
         };
+
+        console.log(window.location.search);
+        if (window.location.search) {
+          var params = this.parseQueryString(window.location.search.substring(1))
+          console.log("params found: ", params);
+          this.text = decodeURI(params.phrase);
+        }
       }
     });
+
+    this.parseQueryString = function( queryString ) {
+      var params = {}, queries, temp, i, l;
+
+      queries = queryString.split("&");
+
+      for ( i = 0, l = queries.length; i < l; i++ ) {
+          temp = queries[i].split('=');
+          params[temp[0]] = temp[1];
+      }
+      return params;
+    }.bind(this);
 
     this.onToggleOptions = function(e) {
       this.openOptions = !this.openOptions;
@@ -95,15 +139,23 @@ riot.tag2('speakout-app', '<textarea riot-value="{text}" onkeyup="{onPhraseKeyUp
     }.bind(this)
 
     this.onPhraseKeyUp = function(e) {
+      this.text = this.refs.phrase.value;
       if (e.which == 13) {
         e.preventDefault();
-        this.speak(this.refs.phrase.value);
+        this.speak(this.text);
       }
+
+      this.update();
     }.bind(this)
 
     this.onVoiceSelect = function(e) {
       console.log("voice changed")
       this.selectedVoice = this.voices[this.refs.voice.selectedIndex]
+    }.bind(this)
+
+    this.onClear = function(e) {
+      this.text = "";
+      this.update();
     }.bind(this)
 
     this.onStop = function(e) {
@@ -122,14 +174,16 @@ riot.tag2('speakout-app', '<textarea riot-value="{text}" onkeyup="{onPhraseKeyUp
         window.speechSynthesis.pause();
       }
 
-      window.speechSynthesis.cancel();
-      this.speechUtterance.text = phrase;
-      this.speechUtterance.voice = this.selectedVoice || this.speechUtterance.voice;
-      this.speechUtterance.pitch = this.pitch;
-      this.speechUtterance.rate = this.rate;
-      this.speechUtterance.volume = this.volume;
-      window.speechSynthesis.speak(this.speechUtterance);
-
+      if (phrase.length > 0) {
+        window.speechSynthesis.cancel();
+        this.speechUtterance.text = phrase;
+        this.speechUtterance.voice = this.selectedVoice || this.speechUtterance.voice;
+        this.speechUtterance.pitch = this.pitch;
+        this.speechUtterance.rate = this.rate;
+        this.speechUtterance.volume = this.volume;
+        console.log(this.speechUtterance);
+        window.speechSynthesis.speak(this.speechUtterance);
+      }
     }.bind(this)
 
     this.onSpeak = function(e) {
