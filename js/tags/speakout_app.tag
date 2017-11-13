@@ -1,52 +1,57 @@
 <speakout-app>
-  <textarea value={ text } onkeyup={ onPhraseKeyUp } ref="phrase"></textarea>
-  <speakout-progress ref="progress" progress={ progress } play={ onSpeak } stop={ onStop } speaking={ speaking }>
-  </speakout-progress>
-  <div>
-    <button value="Clear" onclick={ onClear }>Clear</button>
+  <div class="speakout-app">
+    <nospeech show={ !speechAvailable }></nospeech>
+    <div show={ speechAvailable } class="speakout-app__content">
+      <textarea value={ text } onkeyup={ onPhraseKeyUp } ref="phrase"></textarea>
+      <speakout-progress ref="progress" progress={ progress } play={ onSpeak } stop={ onStop } speaking={ speaking }>
+      </speakout-progress>
+      <div>
+        <button value="Clear" onclick={ onClear }>Clear</button>
+      </div>
+      <button class="button--options" aria-expanded={ openOptions } onclick={ onToggleOptions } >
+        <cog-icon></cog-icon>
+      </button>
+      <fieldset class="speakout-options { openOptionsCss } ">
+        <legend>Options</legend>
+        <div class="speakout-options__section">
+          <label for="voice">Speaker</label>
+          <div>
+            <select onchange={ onVoiceSelect } ref="voice" name="voice">
+              <option each={ voice in voices } value={voice.name}>{ voice.name + " - (" + voice.lang + ")" }</option>
+            </select>
+          </div>
+        </div>
+        <div class="speakout-options__section">
+          <label>Pitch</label>
+          <div>
+            <input name="pitch" ref="pitch" type="range" min="0" max="20" oninput={ onPitchChange } value={ pitchVal } />
+            <label>{ pitch }</label>
+          </div>
+        </div>
+        <div class="speakout-options__section">
+          <label>Rate</label>
+          <div>
+            <input name="rate" ref="rate" type="range" min="10" max="100" oninput={ onRateChange } value={ rangeVal }/>
+            <label>{ rate }</label>
+          </div>
+        </div>
+        <div class="speakout-options__section">
+          <label>Volume</label>
+          <div>
+            <input name="volume" ref="volume" type="range" min="0" max="10" oninput={ onVolumeChange } value={ volVal }/>
+            <label>{ volume }</label>
+          </div>
+        </div>
+        <button value="Reset" onclick={ onResetOptions }>Reset</button>
+      </fieldset>
+      <share-link text={ text } ref="shareLink"></share-link>
+    </div>
   </div>
-  <button class="button--options" aria-expanded={ openOptions } onclick={ onToggleOptions } >
-    <cog-icon></cog-icon>
-  </button>
-  <fieldset class="speakout-options { openOptionsCss } ">
-    <legend>Options</legend>
-    <div class="speakout-options__section">
-      <label for="voice">Speaker</label>
-      <div>
-        <select onchange={ onVoiceSelect } ref="voice" name="voice">
-          <option each={ voice in voices } value={voice.name}>{ voice.name + " - (" + voice.lang + ")" }</option>
-        </select>
-      </div>
-    </div>
-    <div class="speakout-options__section">
-      <label>Pitch</label>
-      <div>
-        <input name="pitch" ref="pitch" type="range" min="0" max="20" oninput={ onPitchChange } value={ pitchVal } />
-        <label>{ pitch }</label>
-      </div>
-    </div>
-    <div class="speakout-options__section">
-      <label>Rate</label>
-      <div>
-        <input name="rate" ref="rate" type="range" min="10" max="100" oninput={ onRateChange } value={ rangeVal }/>
-        <label>{ rate }</label>
-      </div>
-    </div>
-    <div class="speakout-options__section">
-      <label>Volume</label>
-      <div>
-        <input name="volume" ref="volume" type="range" min="0" max="10" oninput={ onVolumeChange } value={ volVal }/>
-        <label>{ volume }</label>
-      </div>
-    </div>
-    <button value="Reset" onclick={ onResetOptions }>Reset</button>
-  </fieldset>
-  <share-link text={ text } ref="shareLink"></share-link>
 
   <script>
     this.speaking = false;
     this.speechAvailable = false;
-    this.text = "Welcome to SpeakOut! Type anything here and press ENTER. Have fun!";
+    this.text = "Welcome to SpeakOut! Type anything here and press play. Have fun!";
     this.speechUtterance = null;
     this.voices = null;
     this.selectedVoice = null;

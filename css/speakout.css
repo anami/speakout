@@ -329,3 +329,13 @@ speakout-progress .speech__progress { flex: 10;}
 
 .speech__progress { border: solid 3px #d600ff; padding: 0.25rem; margin: 0; height: 2rem; margin-top: 0.5rem;}
 .speech__progress-bar { background-color: #d600ff; height: 100%; transition: 0.25s;}
+
+/* no speech available */
+.nospeech__content {
+  border: solid 6px #d600ff;
+  background-color: rgba(255,255,255,0.8);
+}
+
+.nospeech__content h1 { font-size: 3rem; }
+.nospeech__content h2 { font-size: 1.5rem }
+.nospeech__content h3 { font-size: 1.25rem }
