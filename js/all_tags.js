@@ -54,28 +54,38 @@ riot.tag2('speakout-app', '<div class="speakout-app"> <nospeech show="{!speechAv
             self.update();
           };
         } else {
+
           self.voices = window.speechSynthesis.getVoices();
           console.log(self.voices);
           self.update();
         }
 
-        this.speechUtterance.onstart = () => {
+        this.speechUtterance.onstart = () =>
+        {
+          console.log("Starting speaking..");
           this.buttonState = "Stop";
           this.speaking = true;
           this.update();
         }
 
         this.speechUtterance.onresume = () => {
+          console.log("Resume speaking..");
           this.buttonState = "Stop";
           this.speaking = true;
           this.update();
         }
 
         this.speechUtterance.onend = () => {
+          console.log("Finished speaking..");
           this.buttonState = "Speak";
           this.speaking = false;
+          window.speechSynthesis.cancel();
           this.update();
         }
+
+        this.speechUtterance.onerror = (e) => {
+          console.log(e);
+        };
 
         this.speechUtterance.onboundary = (event) => {
           var textLength = this.text.length;
@@ -183,6 +193,7 @@ riot.tag2('speakout-app', '<div class="speakout-app"> <nospeech show="{!speechAv
         this.speechUtterance.pitch = this.pitch;
         this.speechUtterance.rate = this.rate;
         this.speechUtterance.volume = this.volume;
+        this.progress = 0;
         console.log(this.speechUtterance);
         window.speechSynthesis.speak(this.speechUtterance);
       }
