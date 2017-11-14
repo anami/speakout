@@ -258,15 +258,20 @@ input[type=range]:focus::-ms-fill-upper {
   border: solid 4px #d600ff;
 }
 .speakout-options {
-  transition: transform 0.5s ease-out;
-  transition-property: opacity;
-  height: 0;
+  display: none;
   opacity: 0;
+  animation: optionsFadeIn ease-out .5s;
 }
 .speakout-options.visible {
-  height: auto;
+  display: block;
   opacity: 1;
 }
+
+@keyframes optionsFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1;}
+}
+
 .speakout-options__section {
   display: flex;
   align-items: center;
@@ -315,6 +320,7 @@ button.button--options svg {
   height: inherit;
   color: #d600ff;
   fill: #d600ff;
+  outline: none;
 }
 
 speakout-progress {
