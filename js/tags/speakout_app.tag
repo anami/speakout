@@ -49,6 +49,8 @@
   </div>
 
   <script>
+    // 16-11-2017 updating for firefox where it cannot reuse an existing speechSynthesisUtterance object.
+
     this.speaking = false;
     this.speechAvailable = false;
     this.text = "Welcome to SpeakOut! Type anything here and press play. Have fun!";
@@ -76,52 +78,19 @@
 
         if ('onvoiceschanged' in window.speechSynthesis) {
           window.speechSynthesis.onvoiceschanged = function() {
-            self.voices = window.speechSynthesis.getVoices();
-            console.log(self.voices);
-            self.update();
+            self.getVoices();
           };
         } else {
           // Safari does not have the onvoiceschanged event.
-          self.voices = window.speechSynthesis.getVoices();
-          console.log(self.voices);
-          self.update();
+          this.getVoices();
         }
 
-        this.speechUtterance.onstart = () => 
-        {
-          console.log("Starting speaking..");
-          this.buttonState = "Stop";
-          this.speaking = true;
-          this.update();
+        // firefox does not implement onvoiceschanged event yet.
+        if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1){ 
+          this.getVoices();
         }
 
-        this.speechUtterance.onresume = () => {
-          console.log("Resume speaking..");
-          this.buttonState = "Stop";
-          this.speaking = true;
-          this.update();
-        }
-
-        this.speechUtterance.onend = () => {
-          console.log("Finished speaking..");
-          this.buttonState = "Speak";
-          this.speaking = false;
-          window.speechSynthesis.cancel();
-          this.update();
-        }
-
-        this.speechUtterance.onerror = (e) => {
-          console.log(e);
-        };
-
-        this.speechUtterance.onboundary = (event) => {
-          var textLength = this.text.length;
-          var words = this.text.substring(event.charIndex, this.text.length).split(' ');
-          var partialLength = event.charIndex + words[0].length;
-          this.progress = ((partialLength * 100) / textLength);
-          this.refs.progress.update();
-          //onCurrentWord(words[0]);
-        };
+        this.attachUtteranceEventHandlers(this.speechUtterance);
 
         // read querystring
         console.log(window.location.search);
@@ -132,6 +101,57 @@
         }
       }
     });
+
+    getVoices() {
+      this.voices = window.speechSynthesis.getVoices();
+      console.log(this.voices);
+      this.update();
+    }
+
+    /* speechSynthesisUtterance events */
+    onUtteranceError(e) {
+      console.log(e);
+    }
+
+    onUtteranceBoundary(e) {
+      var textLength = this.text.length,
+          words = this.text.substring(e.charIndex, this.text.length).split(' '),
+          partialLength = e.charIndex + words[0].length;
+      
+      this.progress = ((partialLength * 100) / textLength);
+      this.refs.progress.update();
+    }
+
+    onUtteranceEnd(e) {
+      console.log("Finished speaking..");
+      this.buttonState = "Speak";
+      this.speaking = false;
+      window.speechSynthesis.cancel();
+      this.update();
+    }
+
+    onUtteranceStart(e) {
+      console.log("Starting speaking..");
+      this.buttonState = "Stop";
+      this.speaking = true;
+      this.update();
+    }
+
+    onUtteranceResume(e) {
+      console.log("Resume speaking..");
+      this.buttonState = "Stop";
+      this.speaking = true;
+      this.update();
+    }
+
+    attachUtteranceEventHandlers(utterance) {
+      utterance.onresume = this.onUtteranceResume;
+      utterance.onstart = this.onUtteranceStart;
+      utterance.onend = this.onUtteranceEnd;
+      utterance.onboundary = this.onUtteranceBoundary;
+      utterance.onerror = this.onUtteranceError;
+    }
+    /* end of speechSynthesisUtterance events */
 
     parseQueryString( queryString ) {
       var params = {}, queries, temp, i, l;
@@ -216,7 +236,8 @@
 
       if (phrase.length > 0) {
         window.speechSynthesis.cancel();
-        this.speechUtterance.text = phrase;
+        this.speechUtterance = new SpeechSynthesisUtterance(phrase);
+        this.attachUtteranceEventHandlers(this.speechUtterance);
         this.speechUtterance.voice = this.selectedVoice || this.speechUtterance.voice;
         this.speechUtterance.pitch = this.pitch;
         this.speechUtterance.rate = this.rate;

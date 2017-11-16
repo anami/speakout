@@ -23,6 +23,8 @@ riot.tag2('share-link', '<div class="link-section"> <div> <label for="link">Link
     })
 });
 riot.tag2('speakout-app', '<div class="speakout-app"> <nospeech show="{!speechAvailable}"></nospeech> <div show="{speechAvailable}" class="speakout-app__content"> <textarea riot-value="{text}" onkeyup="{onPhraseKeyUp}" ref="phrase"></textarea> <speakout-progress ref="progress" progress="{progress}" play="{onSpeak}" stop="{onStop}" speaking="{speaking}"> </speakout-progress> <div> <button value="Clear" onclick="{onClear}">Clear</button> </div> <button class="button--options" aria-expanded="{openOptions}" onclick="{onToggleOptions}"> <cog-icon></cog-icon> </button> <fieldset class="speakout-options {openOptionsCss} "> <legend>Options</legend> <div class="speakout-options__section"> <label for="voice">Speaker</label> <div> <select onchange="{onVoiceSelect}" ref="voice" name="voice"> <option each="{voice in voices}" riot-value="{voice.name}">{voice.name + ⁗ - (⁗ + voice.lang + ⁗)⁗}</option> </select> </div> </div> <div class="speakout-options__section"> <label>Pitch</label> <div> <input name="pitch" ref="pitch" type="range" min="0" max="20" oninput="{onPitchChange}" riot-value="{pitchVal}"> <label>{pitch}</label> </div> </div> <div class="speakout-options__section"> <label>Rate</label> <div> <input name="rate" ref="rate" type="range" min="10" max="100" oninput="{onRateChange}" riot-value="{rangeVal}"> <label>{rate}</label> </div> </div> <div class="speakout-options__section"> <label>Volume</label> <div> <input name="volume" ref="volume" type="range" min="0" max="10" oninput="{onVolumeChange}" riot-value="{volVal}"> <label>{volume}</label> </div> </div> <button value="Reset" onclick="{onResetOptions}">Reset</button> </fieldset> <share-link text="{text}" ref="shareLink"></share-link> </div> </div>', '', '', function(opts) {
+
+
     this.speaking = false;
     this.speechAvailable = false;
     this.text = "Welcome to SpeakOut! Type anything here and press play. Have fun!";
@@ -49,52 +51,18 @@ riot.tag2('speakout-app', '<div class="speakout-app"> <nospeech show="{!speechAv
 
         if ('onvoiceschanged' in window.speechSynthesis) {
           window.speechSynthesis.onvoiceschanged = function() {
-            self.voices = window.speechSynthesis.getVoices();
-            console.log(self.voices);
-            self.update();
+            self.getVoices();
           };
         } else {
 
-          self.voices = window.speechSynthesis.getVoices();
-          console.log(self.voices);
-          self.update();
+          this.getVoices();
         }
 
-        this.speechUtterance.onstart = () =>
-        {
-          console.log("Starting speaking..");
-          this.buttonState = "Stop";
-          this.speaking = true;
-          this.update();
+        if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
+          this.getVoices();
         }
 
-        this.speechUtterance.onresume = () => {
-          console.log("Resume speaking..");
-          this.buttonState = "Stop";
-          this.speaking = true;
-          this.update();
-        }
-
-        this.speechUtterance.onend = () => {
-          console.log("Finished speaking..");
-          this.buttonState = "Speak";
-          this.speaking = false;
-          window.speechSynthesis.cancel();
-          this.update();
-        }
-
-        this.speechUtterance.onerror = (e) => {
-          console.log(e);
-        };
-
-        this.speechUtterance.onboundary = (event) => {
-          var textLength = this.text.length;
-          var words = this.text.substring(event.charIndex, this.text.length).split(' ');
-          var partialLength = event.charIndex + words[0].length;
-          this.progress = ((partialLength * 100) / textLength);
-          this.refs.progress.update();
-
-        };
+        this.attachUtteranceEventHandlers(this.speechUtterance);
 
         console.log(window.location.search);
         if (window.location.search) {
@@ -104,6 +72,55 @@ riot.tag2('speakout-app', '<div class="speakout-app"> <nospeech show="{!speechAv
         }
       }
     });
+
+    this.getVoices = function() {
+      this.voices = window.speechSynthesis.getVoices();
+      console.log(this.voices);
+      this.update();
+    }.bind(this)
+
+    this.onUtteranceError = function(e) {
+      console.log(e);
+    }.bind(this)
+
+    this.onUtteranceBoundary = function(e) {
+      var textLength = this.text.length,
+          words = this.text.substring(e.charIndex, this.text.length).split(' '),
+          partialLength = e.charIndex + words[0].length;
+
+      this.progress = ((partialLength * 100) / textLength);
+      this.refs.progress.update();
+    }.bind(this)
+
+    this.onUtteranceEnd = function(e) {
+      console.log("Finished speaking..");
+      this.buttonState = "Speak";
+      this.speaking = false;
+      window.speechSynthesis.cancel();
+      this.update();
+    }.bind(this)
+
+    this.onUtteranceStart = function(e) {
+      console.log("Starting speaking..");
+      this.buttonState = "Stop";
+      this.speaking = true;
+      this.update();
+    }.bind(this)
+
+    this.onUtteranceResume = function(e) {
+      console.log("Resume speaking..");
+      this.buttonState = "Stop";
+      this.speaking = true;
+      this.update();
+    }.bind(this)
+
+    this.attachUtteranceEventHandlers = function(utterance) {
+      utterance.onresume = this.onUtteranceResume;
+      utterance.onstart = this.onUtteranceStart;
+      utterance.onend = this.onUtteranceEnd;
+      utterance.onboundary = this.onUtteranceBoundary;
+      utterance.onerror = this.onUtteranceError;
+    }.bind(this)
 
     this.parseQueryString = function( queryString ) {
       var params = {}, queries, temp, i, l;
@@ -188,7 +205,8 @@ riot.tag2('speakout-app', '<div class="speakout-app"> <nospeech show="{!speechAv
 
       if (phrase.length > 0) {
         window.speechSynthesis.cancel();
-        this.speechUtterance.text = phrase;
+        this.speechUtterance = new SpeechSynthesisUtterance(phrase);
+        this.attachUtteranceEventHandlers(this.speechUtterance);
         this.speechUtterance.voice = this.selectedVoice || this.speechUtterance.voice;
         this.speechUtterance.pitch = this.pitch;
         this.speechUtterance.rate = this.rate;
