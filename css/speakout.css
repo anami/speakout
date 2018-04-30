@@ -73,6 +73,18 @@ footer {
     margin: 0;
 }
 
+.footer__madewith {
+    margin-top: 0;
+    vertical-align: middle;
+    position: relative;
+    top: -4px;
+}
+
+.footer__madewith img {
+    position: relative;
+    top: 8px;
+}
+
 header p {
     margin-top: 0;
 }
