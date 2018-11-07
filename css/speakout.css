@@ -240,7 +240,6 @@ input[type=range]:focus::-ms-fill-upper {
 .speakout-app button {
     background-color: #d600ff;
     color: #fff;
-    border-radius: 20% 20%;
     padding: 1rem;
     border-radius: 0.25rem;
     color: #fff;
@@ -272,6 +271,11 @@ input[type=range]:focus::-ms-fill-upper {
 
 .speakout-app play-button button[aria-pressed="true"] .play-icon {
     display: none;
+}
+
+.speakout-app button:focus {
+    border: solid 5px red;
+    outline: 0;
 }
 
 .speakout-app fieldset {

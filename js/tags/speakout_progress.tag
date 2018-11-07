@@ -8,7 +8,4 @@
   </div>
   <style>
   </style>
-  <script>
-    //this.progress = 50;
-  </script>
 </speakout-progress>
