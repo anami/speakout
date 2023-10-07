@@ -1,10 +1,17 @@
+:root {
+    --main-color:#d600ff;
+}
+
 html {
     font-size: calc(1em + 0.4vw);
-    color: #d600ff;
+    color: var(--main-color);
     font-family: Fredoka One, sans-serif;
     line-height: 1.5;
 }
 
+.speakout-app {
+    display: block;
+}
 *,
  ::before,
  ::after {
@@ -43,7 +50,7 @@ option,
 
 #speakout-app {
     background-color: #fff;
-    background-image: radial-gradient(#d600ff, transparent 16%), radial-gradient(#d600ff, transparent 16%);
+    background-image: radial-gradient(#d600ff, transparent 16%), radial-gradient(var(--main-color), transparent 16%);
     background-size: 30px 30px;
     background-position: 0 0, 15px 15px;
 }
@@ -63,13 +70,13 @@ footer {
     justify-content: space-between;
     flex-wrap: wrap;
     padding: 1rem 0.5rem;
-    background-color: #d600ff;
+    background-color: var(--main-color);
     color: #fff;
 }
 
 footer {
     background-color: #fff;
-    color: #d600ff;
+    color: var(--main-color);
     margin: 0;
 }
 
@@ -130,7 +137,7 @@ input[type=range]::-webkit-slider-thumb {
     height: 1.75rem;
     width: 1.75rem;
     border-radius: 0.25rem;
-    background: #d600ff url(../images/grip.svg) no-repeat center;
+    background: var(--main-color) url(../images/grip.svg) no-repeat center;
     background-size: 0.66rem auto;
     cursor: pointer;
     margin-top: -0.75rem;
@@ -146,7 +153,7 @@ input[type=range]::-moz-range-thumb {
     height: 1.75rem;
     width: 1.75rem;
     border-radius: 0.25rem;
-    background: #d600ff url(../images/grip.svg) no-repeat center;
+    background: var(--main-color) url(../images/grip.svg) no-repeat center;
     background-size: 0.66rem auto;
     cursor: pointer;
 }
@@ -161,7 +168,7 @@ input[type=range]::-ms-thumb {
     height: 1.75rem;
     width: 1.75rem;
     border-radius: 0.25rem;
-    background: #d600ff url(../images/grip.svg) no-repeat center;
+    background: var(--main-color) url(../images/grip.svg) no-repeat center;
     background-size: 0.66rem auto;
     cursor: pointer;
 }
@@ -179,7 +186,7 @@ input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 0.33rem;
     cursor: pointer;
-    background-color: #d600ff;
+    background-color: var(--main-color);
     border-radius: 0.25rem;
     border: none;
 }
@@ -188,7 +195,7 @@ input[type=range]::-moz-range-track {
     width: 100%;
     height: 0.33rem;
     cursor: pointer;
-    background: #d600ff;
+    background: var(--main-color);
     border-radius: 0.25rem;
     border: none;
 }
@@ -208,19 +215,19 @@ input[type=range]::-ms-track {
 }
 
 input[type=range]::-ms-fill-lower {
-    background: #d600ff;
+    background: var(--main-color);
     border: none;
     border-radius: 0;
 }
 
 input[type=range]::-ms-fill-upper {
-    background: #d600ff;
+    background: var(--main-color);
     border: none;
     border-radius: 0;
 }
 
 input[type=range]:focus::-ms-fill-upper {
-    background: #d600ff;
+    background: var(--main-color);
 }
 
 .speakout-app {
@@ -233,12 +240,12 @@ input[type=range]:focus::-ms-fill-upper {
 .speakout-app textarea {
     width: 90%;
     min-height: 6rem;
-    border: solid 6px #d600ff;
+    border: solid 6px var(--main-color);
     padding: 0.25rem;
 }
 
 .speakout-app button {
-    background-color: #d600ff;
+    background-color: var(--main-color);
     color: #fff;
     padding: 1rem;
     border-radius: 0.25rem;
@@ -251,7 +258,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .speakout-app select {
-    border: solid 4px #d600ff;
+    border: solid 4px var(--main-color);
     padding: 0.25rem;
 }
 
@@ -280,7 +287,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 .speakout-app fieldset {
     background-color: rgba(255, 255, 255, 0.8);
-    border: solid 4px #d600ff;
+    border: solid 4px var(--main-color);
 }
 
 .speakout-options {
@@ -338,7 +345,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 .link-section input {
     padding: 0.25rem;
-    border: solid 2px #d600ff;
+    border: solid 2px var(--main-color);
     font-family: monospace;
     display: block;
     width: 80%;
@@ -361,8 +368,8 @@ button.button--options[aria-expanded="true"] {
 button.button--options svg {
     width: inherit;
     height: inherit;
-    color: #d600ff;
-    fill: #d600ff;
+    color: var(--main-color);
+    fill: var(--main-color);
     outline: none;
 }
 
@@ -385,7 +392,7 @@ speakout-progress .speech__progress {
 }
 
 .speech__progress {
-    border: solid 3px #d600ff;
+    border: solid 3px var(--main-color);
     padding: 0.25rem;
     margin: 0;
     height: 2rem;
@@ -393,7 +400,7 @@ speakout-progress .speech__progress {
 }
 
 .speech__progress-bar {
-    background-color: #d600ff;
+    background-color: var(--main-color);
     height: 100%;
     transition: 0.25s;
 }
@@ -402,7 +409,7 @@ speakout-progress .speech__progress {
 /* no speech available */
 
 .nospeech__content {
-    border: solid 6px #d600ff;
+    border: solid 6px var(--main-color);
     background-color: rgba(255, 255, 255, 0.8);
 }
 
