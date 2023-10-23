@@ -7,4 +7,4 @@ import './tags/share_link.tag';
 import './tags/speakout_progress.tag';
 import './tags/stopbutton.tag';
 import './tags/speakout_app.tag';
-riot.mount("speakout-app");
+riot.mount('speakout-app');

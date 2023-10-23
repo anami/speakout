@@ -1,9 +1,8 @@
-import { LitElement, svg, html, css } from "https://unpkg.com/lit-element?module";
+import { BaseElement, svg, css } from './base.js';
 
-class OptionsCog extends LitElement {
+class OptionsCog extends BaseElement {
   constructor() {
-    super()
-    console.log(svg)
+    super();
   }
 
   static styles = css`
@@ -15,8 +14,7 @@ class OptionsCog extends LitElement {
       display: block;
     }
   `;
-  
-  
+
   render() {
     return svg`<svg id="cog" viewBox="0 0 190 190" width="30" height="30">
     <g transform="translate(-84.978 -137.34)">

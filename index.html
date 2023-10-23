@@ -1,29 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>
-      Speakout
-    </title>
-    <meta charset="utf-8">
+    <title>Speakout</title>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="apple-mobile-web-app-title" content="SpeakOut!">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet" media="none" onload="if(media!='all')media='all'">
-    <link rel="stylesheet" type="text/css" href="css/speakout.css"/>
-    <script src="./js/playbutton.js" type="module"></script>
-    <script src="./js/cog.js" type="module"></script>
-    <script src="./js/nospeech.js" type="module"></script>
-    <script src="./js/speakout-app.js" type="module"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="apple-mobile-web-app-title" content="SpeakOut!" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Fredoka+One"
+      rel="stylesheet"
+      media="none"
+      onload="if(media!='all')media='all'"
+    />
+    <link rel="stylesheet" type="text/css" href="css/speakout.css" />
+    <script src="js/engine.js" type="module"></script>
+    <script src="js/base.js" type="module"></script>
+    <script src="js/sharelink.js" type="module"></script>
+    <script src="js/progress.js" type="module"></script>
+    <script src="js/styles.js" type="module"></script>
+    <script src="js/stopbutton.js" type="module"></script>
+    <script src="js/playbutton.js" type="module"></script>
+    <script src="js/cog.js" type="module"></script>
+    <script src="js/nospeech.js" type="module"></script>
+    <script src="js/speakout-app.js" type="module"></script>
   </head>
   <body id="speakout-app">
-    <header><h1>SpeakOut!</h1>
+    <header>
+      <h1>SpeakOut!</h1>
       <p>a simple speaking toy</p>
     </header>
-    <speakout-app></speakout-app>
+    <speakout-app class="speakout-app"> </speakout-app>
+
     <footer>
-        <div><span>Made with ♥ by </span><a href="https://github.com/anami">anami</a></div>
-        <div class="footer__madewith"><span>Made with </span><a href="https://lit.dev" title="Made with Lit!" alt="Lit"><img src="https://lit.dev/images/logo.svg#flame" /></a></div>
+      <div>
+        <span>Made with ♥ by </span><a href="https://github.com/anami">anami</a>
+      </div>
+      <div class="footer__madewith">
+        <span>Made with </span
+        ><a href="https://lit.dev" title="Made with Lit!" alt="Lit"
+          ><img src="https://lit.dev/images/logo.svg#flame"
+        /></a>
+      </div>
     </footer>
   </body>
 </html>
