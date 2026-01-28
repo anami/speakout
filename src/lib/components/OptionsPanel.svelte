@@ -111,7 +111,7 @@
 
 	legend {
 		padding: 0.1rem 0.6rem;
-		background: #ffe600;
+		background: var(--accent, #ffe600);
 		border: 3px solid #000;
 		box-shadow: 3px 3px 0 #000;
 		text-transform: uppercase;
@@ -149,7 +149,7 @@
 
 	select:focus-visible {
 		outline: none;
-		box-shadow: 0 0 0 3px #d600ff, 5px 5px 0 #000;
+		box-shadow: 0 0 0 3px var(--accent, #ffe600), 5px 5px 0 #000;
 	}
 
 	/* Range slider styling */
@@ -167,7 +167,7 @@
 		width: 100%;
 		height: 0.33rem;
 		cursor: pointer;
-		background-color: #000;
+		background-color: var(--accent, #ffe600);
 		border: none;
 	}
 
@@ -190,7 +190,7 @@
 		width: 100%;
 		height: 0.33rem;
 		cursor: pointer;
-		background: #000;
+		background: var(--accent, #ffe600);
 		border: none;
 	}
 
@@ -223,6 +223,8 @@
 	}
 
 	.btn-reset:hover {
+		background-color: var(--accent, #ffe600);
+		color: #000;
 		transform: translate(2px, 2px);
 		box-shadow: 2px 2px 0 #000;
 	}
@@ -234,6 +236,6 @@
 
 	.btn-reset:focus-visible {
 		outline: none;
-		box-shadow: 0 0 0 3px #d600ff, 6px 6px 0 #000;
+		box-shadow: 0 0 0 3px var(--accent, #ffe600), 6px 6px 0 #000;
 	}
 </style>

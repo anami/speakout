@@ -100,7 +100,7 @@
 		position: absolute;
 		top: -0.6rem;
 		left: 0.5rem;
-		background: #ffe600;
+		background: var(--accent, #ffe600);
 		color: #000;
 		border: 3px solid #000;
 		box-shadow: 3px 3px 0 #000;
@@ -141,6 +141,8 @@
 	}
 
 	.btn-clear:hover {
+		background-color: var(--accent, #ffe600);
+		color: #000;
 		transform: translate(2px, 2px);
 		box-shadow: 2px 2px 0 #000;
 	}
@@ -152,7 +154,7 @@
 
 	.btn-clear:focus-visible {
 		outline: none;
-		box-shadow: 0 0 0 3px #d600ff, 6px 6px 0 #000;
+		box-shadow: 0 0 0 3px var(--accent, #ffe600), 6px 6px 0 #000;
 	}
 
 	.button--options {

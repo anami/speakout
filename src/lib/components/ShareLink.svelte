@@ -61,7 +61,7 @@
 
 	.link-section input:focus {
 		outline: none;
-		box-shadow: 3px 3px 0 #000;
+		box-shadow: 0 0 0 3px var(--accent, #ffe600), 3px 3px 0 #000;
 	}
 
 	.copied-toast {

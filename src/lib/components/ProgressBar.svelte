@@ -74,6 +74,8 @@
 
 	.btn-play:hover:not(:disabled),
 	.btn-stop:hover:not(:disabled) {
+		background-color: var(--accent, #ffe600);
+		color: #000;
 		transform: translate(1.5px, 1.5px);
 		box-shadow: 1.5px 1.5px 0 #000;
 	}
@@ -104,7 +106,7 @@
 	.btn-play:focus-visible,
 	.btn-stop:focus-visible {
 		outline: none;
-		box-shadow: 0 0 0 3px #d600ff, 3px 3px 0 3px #000;
+		box-shadow: 0 0 0 3px var(--accent, #ffe600), 3px 3px 0 3px #000;
 	}
 
 	.pause-icon {
@@ -128,7 +130,7 @@
 	}
 
 	.speech__progress-bar {
-		background-color: #d600ff;
+		background-color: var(--magenta, #d600ff);
 		height: 100%;
 		transition: 0.25s;
 	}

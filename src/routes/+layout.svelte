@@ -32,7 +32,7 @@
 		color: #fff;
 		border-bottom: 4px solid #000;
 		box-shadow: 0 6px 0 #000;
-		text-transform: uppercase;
+		/* text-transform: uppercase; */
 		letter-spacing: 0.08em;
 	}
 
@@ -58,5 +58,9 @@
 	footer a {
 		color: #d600ff;
 		margin-left: 8px;
+	}
+
+	:global(main) {
+		flex: 1;
 	}
 </style>
