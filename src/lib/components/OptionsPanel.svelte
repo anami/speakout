@@ -99,8 +99,8 @@
 <style>
 	.speakout-options {
 		background-color: rgba(255, 255, 255, 0.95);
-		border: 3px solid #000;
-		box-shadow: 4px 4px 0 #000;
+		border: 4px solid #000;
+		box-shadow: 6px 6px 0 #000;
 		animation: animFadeIn ease-out 0.5s;
 	}
 
@@ -110,7 +110,14 @@
 	}
 
 	legend {
-		padding: 0 0.5rem;
+		padding: 0.1rem 0.6rem;
+		background: #ffe600;
+		border: 3px solid #000;
+		box-shadow: 3px 3px 0 #000;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		font-size: 0.8rem;
+		transform: rotate(-2deg);
 	}
 
 	.speakout-options__section {
@@ -134,10 +141,10 @@
 	}
 
 	select {
-		border: 3px solid #000;
-		padding: 0.25rem;
+		border: 4px solid #000;
+		padding: 0.35rem;
 		background: #fff;
-		box-shadow: 3px 3px 0 #000;
+		box-shadow: 4px 4px 0 #000;
 	}
 
 	select:focus-visible {
@@ -169,8 +176,8 @@
 		height: 1.75rem;
 		width: 1.75rem;
 		background: #d600ff;
-		border: 3px solid #000;
-		box-shadow: 2px 2px 0 #000;
+		border: 4px solid #000;
+		box-shadow: 3px 3px 0 #000;
 		cursor: pointer;
 		margin-top: -0.75rem;
 	}
@@ -191,8 +198,8 @@
 		height: 1.75rem;
 		width: 1.75rem;
 		background: #d600ff;
-		border: 3px solid #000;
-		box-shadow: 2px 2px 0 #000;
+		border: 4px solid #000;
+		box-shadow: 3px 3px 0 #000;
 		cursor: pointer;
 	}
 
@@ -207,8 +214,8 @@
 		text-transform: uppercase;
 		font-weight: normal;
 		letter-spacing: 1px;
-		border: 3px solid #000;
-		box-shadow: 4px 4px 0 #000;
+		border: 4px solid #000;
+		box-shadow: 5px 5px 0 #000;
 		display: block;
 		margin: 0.5rem auto 0;
 		cursor: pointer;

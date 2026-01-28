@@ -15,10 +15,11 @@
 	}
 
 	.nospeech__content {
-		border: solid 6px #d600ff;
-		background-color: rgba(255, 255, 255, 0.8);
+		border: solid 4px #000;
+		box-shadow: 6px 6px 0 #000;
+		background-color: rgba(255, 255, 255, 0.9);
 		text-align: center;
-		padding: 1rem;
+		padding: 1.25rem;
 	}
 
 	h1 {

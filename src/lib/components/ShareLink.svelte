@@ -19,7 +19,6 @@
 
 <div class="link-section">
 	<div>
-		<label for="share-link-input">Link to your speech:</label>
 		<div class="input-wrap">
 			<input
 				id="share-link-input"
@@ -39,17 +38,19 @@
 <style>
 	.link-section {
 		text-align: center;
+		position: relative;
+		margin: 0;
 	}
 
 	.input-wrap {
 		position: relative;
-		width: 80%;
+		width: 90%;
 		margin: 0 auto;
 	}
 
 	.link-section input {
-		padding: 0.4rem;
-		border: 3px solid #000;
+		padding: 0.55rem 0.65rem;
+		border: 4px solid #000;
 		font-family: monospace;
 		display: block;
 		width: 100%;
@@ -72,8 +73,8 @@
 		color: #fff;
 		padding: 0.2rem 0.5rem;
 		font-size: 0.75rem;
-		border: 2px solid #000;
-		box-shadow: 2px 2px 0 #000;
+		border: 3px solid #000;
+		box-shadow: 3px 3px 0 #000;
 		white-space: nowrap;
 		animation: fadeInOut 1.5s ease-out forwards;
 	}

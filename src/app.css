@@ -1,7 +1,17 @@
 /* === RESET === */
+:root {
+	--ink: #111;
+	--magenta: #d600ff;
+	--magenta-deep: #a600c8;
+	--paper: #fff;
+	--shadow: 6px 6px 0 var(--ink);
+	--shadow-sm: 3px 3px 0 var(--ink);
+	--border-thick: 4px solid var(--ink);
+}
+
 html {
 	font-size: calc(1em + 0.4vw);
-	color: #d600ff;
+	color: var(--magenta);
 	font-family: Fredoka One, sans-serif;
 	line-height: 1.5;
 }
@@ -17,10 +27,18 @@ html {
 }
 
 body {
-	background: #fefefe;
+	background-color: #fefefe;
+	background-image:
+		linear-gradient(90deg, rgba(214, 0, 255, 0.08) 1px, transparent 1px),
+		linear-gradient(0deg, rgba(214, 0, 255, 0.08) 1px, transparent 1px);
+	background-size: 28px 28px;
 	overflow-x: hidden;
 	padding-bottom: 1.5rem;
 	margin: 0;
+}
+
+body header:first-of-type {
+	margin-top: 0;
 }
 
 * {
@@ -44,10 +62,12 @@ option,
 }
 
 #speakout-app {
-	background-color: #fff;
-	background-image: radial-gradient(#d600ff, transparent 16%), radial-gradient(#d600ff, transparent 16%);
-	background-size: 30px 30px;
-	background-position: 0 0, 15px 15px;
+	background-color: var(--paper);
+	background-image:
+		radial-gradient(var(--magenta) 12%, transparent 13%),
+		radial-gradient(var(--magenta) 12%, transparent 13%);
+	background-size: 32px 32px;
+	background-position: 0 0, 16px 16px;
 }
 
 li + li {

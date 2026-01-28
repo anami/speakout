@@ -24,28 +24,35 @@
 		align-items: center;
 		justify-content: space-between;
 		flex-wrap: wrap;
-		padding: 1rem 0.5rem;
+		padding: 0.85rem 1rem;
 	}
 
 	header {
 		background-color: #d600ff;
 		color: #fff;
+		border-bottom: 4px solid #000;
+		box-shadow: 0 6px 0 #000;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
 	}
 
 	header p {
 		margin-top: 0;
+		font-size: 0.85rem;
 	}
 
 	header h1 {
 		text-align: center;
-		font-size: 1.75rem;
+		font-size: 2rem;
 		margin-right: 1rem;
+		text-shadow: 2px 2px 0 #000;
 	}
 
 	footer {
 		background-color: #fff;
 		color: #d600ff;
 		margin: 0;
+		border-top: 4px solid #000;
 	}
 
 	footer a {

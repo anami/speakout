@@ -50,16 +50,17 @@
 	.progress-controls {
 		display: flex;
 		margin: 0;
+		margin-top: 0.5rem;
 	}
 
 	.btn-play,
 	.btn-stop {
 		width: 3rem;
 		height: 3rem;
-		border: 3px solid #000;
+		border: 4px solid #000;
 		padding: 0;
 		margin: 0;
-		border-radius: 50%;
+		border-radius: 0.35rem;
 		background-color: #d600ff;
 		color: #fff;
 		cursor: pointer;
@@ -67,7 +68,7 @@
 		align-items: center;
 		justify-content: center;
 		flex-shrink: 0;
-		box-shadow: 3px 3px 0 #000;
+		box-shadow: 4px 4px 0 #000;
 		transition: transform 0.1s, box-shadow 0.1s;
 	}
 
@@ -117,13 +118,13 @@
 
 	.speech__progress {
 		flex: 10;
-		border: 3px solid #000;
-		padding: 0.25rem;
+		border: 4px solid #000;
+		padding: 0.2rem;
 		margin: 0;
-		height: 2rem;
+		height: 2.25rem;
 		margin-top: 0.5rem;
 		background: #fff;
-		box-shadow: 4px 4px 0 #000;
+		box-shadow: 5px 5px 0 #000;
 	}
 
 	.speech__progress-bar {
