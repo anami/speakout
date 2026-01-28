@@ -1,16 +1,15 @@
 {
   "name": "speakout",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "SpeakOut! a simple speaking toy.",
-  "main": "src/index.js",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "start": "./node_modules/.bin/webpack-dev-server --inline --watch --hot --colors -d --port 4000",
-    "build": "./node_modules/.bin/webpack --config webpack.prod.js"
+    "dev": "vite dev --port 4000",
+    "start": "vite dev --port 4000",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "keywords": [
-    "riotjs",
-    "webpack"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/anami/speakout.git"
@@ -22,22 +21,12 @@
   },
   "homepage": "https://github.com/anami/speakout#readme",
   "devDependencies": {
-    "babel": "^6.23.0",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-es2015": "^6.24.1",
-    "clean-webpack-plugin": "^0.1.19",
-    "customize-riotjs-loader": "git+https://github.com/taketchi/customize-riotjs-loader.git",
-    "html-loader": "^0.5.5",
-    "html-webpack-plugin": "^3.2.0",
-    "riot-hot-reload": "^1.0.0",
-    "webpack": "^4.24.0",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10",
-    "webpack-merge": "^4.1.4"
-  },
-  "dependencies": {
-    "riot": "^3.13.1"
+    "@sveltejs/adapter-static": "^3.0.0",
+    "@sveltejs/kit": "^2.0.0",
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "svelte": "^5.0.0",
+    "svelte-check": "^4.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^6.0.0"
   }
 }
