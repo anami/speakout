@@ -56,7 +56,7 @@
 	.btn-stop {
 		width: 3rem;
 		height: 3rem;
-		border: 0;
+		border: 3px solid #000;
 		padding: 0;
 		margin: 0;
 		border-radius: 50%;
@@ -67,6 +67,27 @@
 		align-items: center;
 		justify-content: center;
 		flex-shrink: 0;
+		box-shadow: 3px 3px 0 #000;
+		transition: transform 0.1s, box-shadow 0.1s;
+	}
+
+	.btn-play:hover:not(:disabled),
+	.btn-stop:hover:not(:disabled) {
+		transform: translate(1.5px, 1.5px);
+		box-shadow: 1.5px 1.5px 0 #000;
+	}
+
+	.btn-play:active:not(:disabled),
+	.btn-stop:active:not(:disabled) {
+		transform: translate(3px, 3px);
+		box-shadow: none;
+	}
+
+	.btn-play:disabled,
+	.btn-stop:disabled {
+		opacity: 0.4;
+		cursor: not-allowed;
+		box-shadow: 3px 3px 0 #000;
 	}
 
 	.btn-play :global(svg),
@@ -79,10 +100,10 @@
 		margin-top: 0;
 	}
 
-	.btn-play:focus,
-	.btn-stop:focus {
-		border: solid 5px red;
-		outline: 0;
+	.btn-play:focus-visible,
+	.btn-stop:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 3px #d600ff, 3px 3px 0 3px #000;
 	}
 
 	.pause-icon {
@@ -96,11 +117,13 @@
 
 	.speech__progress {
 		flex: 10;
-		border: solid 3px #d600ff;
+		border: 3px solid #000;
 		padding: 0.25rem;
 		margin: 0;
 		height: 2rem;
 		margin-top: 0.5rem;
+		background: #fff;
+		box-shadow: 4px 4px 0 #000;
 	}
 
 	.speech__progress-bar {

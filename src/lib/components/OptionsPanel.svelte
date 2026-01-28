@@ -98,8 +98,9 @@
 
 <style>
 	.speakout-options {
-		background-color: rgba(255, 255, 255, 0.8);
-		border: solid 4px #d600ff;
+		background-color: rgba(255, 255, 255, 0.95);
+		border: 3px solid #000;
+		box-shadow: 4px 4px 0 #000;
 		animation: animFadeIn ease-out 0.5s;
 	}
 
@@ -133,8 +134,15 @@
 	}
 
 	select {
-		border: solid 4px #d600ff;
+		border: 3px solid #000;
 		padding: 0.25rem;
+		background: #fff;
+		box-shadow: 3px 3px 0 #000;
+	}
+
+	select:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 3px #d600ff, 5px 5px 0 #000;
 	}
 
 	/* Range slider styling */
@@ -152,65 +160,73 @@
 		width: 100%;
 		height: 0.33rem;
 		cursor: pointer;
-		background-color: #d600ff;
-		border-radius: 0.25rem;
+		background-color: #000;
 		border: none;
 	}
 
 	input[type='range']::-webkit-slider-thumb {
 		-webkit-appearance: none;
-		box-shadow: 0 0 0 0.2rem #fefefe;
 		height: 1.75rem;
 		width: 1.75rem;
-		border-radius: 0.25rem;
 		background: #d600ff;
+		border: 3px solid #000;
+		box-shadow: 2px 2px 0 #000;
 		cursor: pointer;
 		margin-top: -0.75rem;
 	}
 
-	input[type='range']:focus::-webkit-slider-thumb {
-		outline: none;
-		box-shadow: 0 0 0 0.25rem #f0f;
+	input[type='range']:focus-visible::-webkit-slider-thumb {
+		box-shadow: 0 0 0 3px #d600ff, 4px 4px 0 #000;
 	}
 
 	input[type='range']::-moz-range-track {
 		width: 100%;
 		height: 0.33rem;
 		cursor: pointer;
-		background: #d600ff;
-		border-radius: 0.25rem;
+		background: #000;
 		border: none;
 	}
 
 	input[type='range']::-moz-range-thumb {
-		border: none;
 		height: 1.75rem;
 		width: 1.75rem;
-		border-radius: 0.25rem;
 		background: #d600ff;
+		border: 3px solid #000;
+		box-shadow: 2px 2px 0 #000;
 		cursor: pointer;
 	}
 
-	input[type='range']:focus::-moz-range-thumb {
-		outline: none;
-		box-shadow: 0 0 0 0.25rem #f0f;
+	input[type='range']:focus-visible::-moz-range-thumb {
+		box-shadow: 0 0 0 3px #d600ff, 4px 4px 0 #000;
 	}
 
 	.btn-reset {
 		background-color: #d600ff;
 		color: #fff;
-		padding: 0.25rem 5rem;
-		border-radius: 0.25rem;
+		padding: 0.5rem 5rem;
 		text-transform: uppercase;
 		font-weight: normal;
 		letter-spacing: 1px;
-		border: none;
+		border: 3px solid #000;
+		box-shadow: 4px 4px 0 #000;
 		display: block;
 		margin: 0.5rem auto 0;
+		cursor: pointer;
+		transition: transform 0.1s, box-shadow 0.1s;
 	}
 
-	.btn-reset:focus {
-		border: solid 5px red;
-		outline: 0;
+	.btn-reset:hover {
+		transform: translate(2px, 2px);
+		box-shadow: 2px 2px 0 #000;
+	}
+
+	.btn-reset:active {
+		transform: translate(4px, 4px);
+		box-shadow: none;
+	}
+
+	.btn-reset:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 3px #d600ff, 6px 6px 0 #000;
 	}
 </style>

@@ -78,25 +78,44 @@
 	.speakout-app textarea {
 		width: 90%;
 		min-height: 6rem;
-		border: solid 6px #d600ff;
-		padding: 0.25rem;
+		border: 3px solid #000;
+		border-radius: 0.5rem;
+		padding: 0.5rem;
+		background: #fff;
+		transition: box-shadow 0.15s;
+	}
+
+	.speakout-app textarea:focus {
+		outline: none;
+		box-shadow: 4px 4px 0 #000;
 	}
 
 	.btn-clear {
 		background-color: #d600ff;
 		color: #fff;
-		padding: 0.25rem 5rem;
-		border-radius: 0.25rem;
+		padding: 0.5rem 5rem;
 		text-transform: uppercase;
 		font-weight: normal;
 		margin: 0.5rem;
 		letter-spacing: 1px;
-		border: none;
+		border: 3px solid #000;
+		box-shadow: 4px 4px 0 #000;
+		transition: transform 0.1s, box-shadow 0.1s;
 	}
 
-	.btn-clear:focus {
-		border: solid 5px red;
-		outline: 0;
+	.btn-clear:hover {
+		transform: translate(2px, 2px);
+		box-shadow: 2px 2px 0 #000;
+	}
+
+	.btn-clear:active {
+		transform: translate(4px, 4px);
+		box-shadow: none;
+	}
+
+	.btn-clear:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 3px #d600ff, 6px 6px 0 #000;
 	}
 
 	.button--options {
