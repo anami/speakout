@@ -16,6 +16,7 @@
 - Keep Svelte files organized as `<script>` then markup, and co-locate component styles when needed.
 - Use PascalCase for components (e.g., `SpeakoutApp.svelte`) and camelCase for functions/variables.
 - TypeScript is configured with `strict` and `checkJs` in `tsconfig.json`; keep types sound and avoid implicit `any`.
+- UI styling is intentionally neobrutalist with a magenta primary and neon‑yellow accent (see CSS variables in `src/app.css`).
 
 ## Testing Guidelines
 - There is no formal test suite in this repo yet.
@@ -27,3 +28,7 @@
 
 ## Configuration Notes
 - The static adapter outputs an SPA with `fallback: 'index.html'` and a production base path of `/speakout` (see `svelte.config.js`).
+
+## Recent UI Changes
+- Neobrutalist restyle with magenta primary and neon accent.
+- Sticker-style section labels for Text/Controls/Share and a cleaner options toggle with close button.

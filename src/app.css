@@ -33,12 +33,14 @@ body {
 		linear-gradient(90deg, rgba(214, 0, 255, 0.08) 1px, transparent 1px),
 		linear-gradient(0deg, rgba(214, 0, 255, 0.08) 1px, transparent 1px);
 	background-size: 28px 28px;
+	background-position: 0 0, 0 0;
 	overflow-x: hidden;
-	padding-bottom: 1.5rem;
+	padding-bottom: 0;
 	margin: 0;
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
+	animation: grid-drift 20s linear infinite;
 }
 
 body header:first-of-type {
@@ -72,6 +74,24 @@ option,
 		radial-gradient(var(--magenta) 12%, transparent 13%);
 	background-size: 32px 32px;
 	background-position: 0 0, 16px 16px;
+	animation: dots-drift 24s linear infinite;
+}
+
+@keyframes grid-drift {
+	from { background-position: 0 0, 0 0; }
+	to { background-position: 56px 56px, -56px 56px; }
+}
+
+@keyframes dots-drift {
+	from { background-position: 0 0, 16px 16px; }
+	to { background-position: 64px 64px, 80px 80px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	body,
+	#speakout-app {
+		animation: none;
+	}
 }
 
 li + li {

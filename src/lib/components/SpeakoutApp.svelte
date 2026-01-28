@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { fly } from 'svelte/transition';
 	import { createSpeechEngine } from '$lib/speech.svelte';
-	import CogIcon from './icons/CogIcon.svelte';
 	import NoSpeech from './NoSpeech.svelte';
 	import ProgressBar from './ProgressBar.svelte';
 	import OptionsPanel from './OptionsPanel.svelte';
@@ -44,29 +44,32 @@
 		</section>
 
 		<button
-			class="button--options"
+			class="btn-options"
 			aria-expanded={engine.openOptions}
 			onclick={() => engine.toggleOptions()}
 		>
-			<CogIcon />
+			{engine.openOptions ? 'Hide options' : 'Show options'}
 		</button>
 
 		{#if engine.openOptions}
-			<OptionsPanel
-				voices={engine.voices}
-				selectedVoiceIndex={engine.selectedVoiceIndex}
-				pitch={engine.pitch}
-				rate={engine.rate}
-				volume={engine.volume}
-				pitchVal={engine.pitchVal}
-				rateVal={engine.rateVal}
-				volVal={engine.volVal}
-				onvoicechange={(i) => engine.setVoiceIndex(i)}
-				onpitchchange={(v) => engine.setPitch(v)}
-				onratechange={(v) => engine.setRate(v)}
-				onvolumechange={(v) => engine.setVolume(v)}
-				onreset={() => engine.resetOptions()}
-			/>
+			<div in:fly={{ y: -8, duration: 160 }} out:fly={{ y: -6, duration: 140 }}>
+				<OptionsPanel
+					voices={engine.voices}
+					selectedVoiceIndex={engine.selectedVoiceIndex}
+					pitch={engine.pitch}
+					rate={engine.rate}
+					volume={engine.volume}
+					pitchVal={engine.pitchVal}
+					rateVal={engine.rateVal}
+					volVal={engine.volVal}
+					onvoicechange={(i) => engine.setVoiceIndex(i)}
+					onpitchchange={(v) => engine.setPitch(v)}
+					onratechange={(v) => engine.setRate(v)}
+					onvolumechange={(v) => engine.setVolume(v)}
+					onreset={() => engine.resetOptions()}
+					onclose={() => engine.toggleOptions()}
+				/>
+			</div>
 		{/if}
 
 		<section class="section section--share">
@@ -157,24 +160,30 @@
 		box-shadow: 0 0 0 3px var(--accent, #ffe600), 6px 6px 0 #000;
 	}
 
-	.button--options {
-		width: 2rem;
-		height: 2rem;
-		background: transparent;
-		border: 0;
-		padding: 0;
-		transition: transform 0.5s ease-out;
+	.btn-options {
+		background-color: #fff;
+		color: #000;
+		padding: 0.4rem 1.25rem;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		border: 4px solid #000;
+		box-shadow: 4px 4px 0 #000;
+		transition: transform 0.1s, box-shadow 0.1s, background-color 0.1s;
 	}
 
-	.button--options[aria-expanded='true'] {
-		transform: rotate(45deg);
+	.btn-options:hover {
+		background-color: var(--accent, #ffe600);
+		transform: translate(2px, 2px);
+		box-shadow: 2px 2px 0 #000;
 	}
 
-	.button--options :global(svg) {
-		width: inherit;
-		height: inherit;
-		color: #d600ff;
-		fill: #d600ff;
+	.btn-options:active {
+		transform: translate(4px, 4px);
+		box-shadow: none;
+	}
+
+	.btn-options:focus-visible {
 		outline: none;
+		box-shadow: 0 0 0 3px var(--accent, #ffe600), 6px 6px 0 #000;
 	}
 </style>

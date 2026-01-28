@@ -62,5 +62,6 @@
 
 	:global(main) {
 		flex: 1;
+		padding-bottom: 1.5rem;
 	}
 </style>

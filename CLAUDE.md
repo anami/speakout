@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-SpeakOut is a text-to-speech web application using the HTML5 Web Speech API, built with Svelte 5 + SvelteKit + Vite. The UI uses a brutalist monochromatic (black/white) design with system fonts.
+SpeakOut is a text-to-speech web application using the HTML5 Web Speech API, built with Svelte 5 + SvelteKit + Vite. The UI is neobrutalist with a magenta primary, neon‑yellow accent, bold borders/shadows, and the Fredoka One display font.
 
 ## Setup
 
@@ -40,10 +40,10 @@ Components live in `src/lib/components/`:
 
 - **SpeakoutApp.svelte** — Root component wiring textarea, controls, options, and share link
 - **ProgressBar.svelte** — Play/stop buttons + progress bar
-- **OptionsPanel.svelte** — Voice selector, pitch/rate/volume sliders, reset button
+- **OptionsPanel.svelte** — Voice selector, pitch/rate/volume sliders, reset button, close button
 - **ShareLink.svelte** — Generates URL-encoded shareable links (readonly, click-to-select)
 - **NoSpeech.svelte** — Fallback for unsupported browsers
-- **icons/** — PlayIcon, StopIcon, CogIcon (SVG components using `currentColor`)
+- **icons/** — PlayIcon, StopIcon (SVG components using `currentColor`)
 
 ### Speech Engine
 
@@ -65,10 +65,16 @@ User input → Svelte 5 reactive state → SpeechSynthesis API → Boundary even
 - Audio parameters: pitch (0-2), rate (0.1-10), volume (0-1) — range inputs scaled by 10
 - Progress tracking relies on utterance boundary events (may not work with all voices)
 - Query string support enables pre-filled phrases via `?phrase=` URL parameter
-- Cog icon rotates 45deg when options panel is toggled
+- Options panel toggles via a labeled button and animates in/out with a small slide
 
 ## Notes
 
 - No test framework configured
 - Browser compatibility: Chrome, Firefox, Safari (requires Web Speech API support)
-- Brutalist theme: black/white only, no border-radius, no gradients, no shadows, system fonts
+- Neobrutalist theme: heavy borders/shadows, magenta + neon accent, subtle animated grid/dot background, minimal radius
+
+## Recent UI Changes
+
+- Added sticker-style section labels for Text/Controls/Share
+- Replaced the options cog with a labeled toggle and a panel close button
+- Added background animation with reduced-motion support

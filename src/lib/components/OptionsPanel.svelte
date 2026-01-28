@@ -12,7 +12,8 @@
 		onpitchchange,
 		onratechange,
 		onvolumechange,
-		onreset
+		onreset,
+		onclose
 	}: {
 		voices: SpeechSynthesisVoice[];
 		selectedVoiceIndex: number;
@@ -27,10 +28,14 @@
 		onratechange: (val: number) => void;
 		onvolumechange: (val: number) => void;
 		onreset: () => void;
+		onclose: () => void;
 	} = $props();
 </script>
 
 <fieldset class="speakout-options">
+	<button class="btn-close" type="button" onclick={onclose} aria-label="Close options">
+		×
+	</button>
 	<legend>Options</legend>
 
 	<div class="speakout-options__section">
@@ -98,15 +103,16 @@
 
 <style>
 	.speakout-options {
-		background-color: rgba(255, 255, 255, 0.95);
+		background:
+			linear-gradient(0deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.96)),
+			linear-gradient(90deg, rgba(214, 0, 255, 0.06) 1px, transparent 1px),
+			linear-gradient(0deg, rgba(214, 0, 255, 0.06) 1px, transparent 1px);
+		background-size: auto, 24px 24px, 24px 24px;
 		border: 4px solid #000;
 		box-shadow: 6px 6px 0 #000;
-		animation: animFadeIn ease-out 0.5s;
-	}
-
-	@keyframes animFadeIn {
-		from { opacity: 0; }
-		to { opacity: 1; }
+		padding: 1rem;
+		position: relative;
+		overflow: hidden;
 	}
 
 	legend {
@@ -120,9 +126,43 @@
 		transform: rotate(-2deg);
 	}
 
+	.btn-close {
+		position: absolute;
+		top: 0.5rem;
+		right: 0.5rem;
+		width: 2rem;
+		height: 2rem;
+		border: 4px solid #000;
+		background: #fff;
+		font-size: 1.2rem;
+		line-height: 1;
+		box-shadow: 3px 3px 0 #000;
+		cursor: pointer;
+		transition: transform 0.1s, box-shadow 0.1s, background-color 0.1s;
+	}
+
+	.btn-close:hover {
+		background-color: var(--accent, #ffe600);
+		transform: translate(2px, 2px);
+		box-shadow: 2px 2px 0 #000;
+	}
+
+	.btn-close:active {
+		transform: translate(4px, 4px);
+		box-shadow: none;
+	}
+
+	.btn-close:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 3px var(--accent, #ffe600), 6px 6px 0 #000;
+	}
+
 	.speakout-options__section {
 		display: flex;
 		align-items: center;
+		gap: 0.75rem;
+		padding: 0.5rem 0;
+		border-bottom: 2px dashed #000;
 	}
 
 	.speakout-options__section > label {
@@ -133,11 +173,32 @@
 		flex: 3;
 		display: flex;
 		align-items: center;
+		gap: 0.5rem;
 	}
 
 	.speakout-options__section > div > input,
 	.speakout-options__section > div > select {
 		width: 80%;
+	}
+
+	.speakout-options__section:last-of-type {
+		border-bottom: none;
+	}
+
+	@media (max-width: 640px) {
+		.speakout-options__section {
+			flex-wrap: wrap;
+		}
+
+		.speakout-options__section > label,
+		.speakout-options__section > div {
+			flex: 1 1 100%;
+		}
+
+		.speakout-options__section > div > input,
+		.speakout-options__section > div > select {
+			width: 100%;
+		}
 	}
 
 	select {
@@ -167,7 +228,7 @@
 		width: 100%;
 		height: 0.33rem;
 		cursor: pointer;
-		background-color: var(--accent, #ffe600);
+		background-color: var(--magenta, #d600ff);
 		border: none;
 	}
 
@@ -182,6 +243,11 @@
 		margin-top: -0.75rem;
 	}
 
+	input[type='range']:hover::-webkit-slider-thumb {
+		background: var(--accent, #ffe600);
+		box-shadow: 4px 4px 0 #000;
+	}
+
 	input[type='range']:focus-visible::-webkit-slider-thumb {
 		box-shadow: 0 0 0 3px #d600ff, 4px 4px 0 #000;
 	}
@@ -190,7 +256,7 @@
 		width: 100%;
 		height: 0.33rem;
 		cursor: pointer;
-		background: var(--accent, #ffe600);
+		background: var(--magenta, #d600ff);
 		border: none;
 	}
 
@@ -201,6 +267,11 @@
 		border: 4px solid #000;
 		box-shadow: 3px 3px 0 #000;
 		cursor: pointer;
+	}
+
+	input[type='range']:hover::-moz-range-thumb {
+		background: var(--accent, #ffe600);
+		box-shadow: 4px 4px 0 #000;
 	}
 
 	input[type='range']:focus-visible::-moz-range-thumb {
